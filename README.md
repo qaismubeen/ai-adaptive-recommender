@@ -35,18 +35,20 @@ The MovieLens 100K dataset (943 users, 1682 items, 100,000 ratings) is 93.7% spa
 Python, NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn, Streamlit
 
 ## Project Structure
+
 ai-adaptive-recommender/
-├── data/                    MovieLens 100K dataset
-├── src/
-│   ├── clustering.py        K-Means user segmentation
-│   ├── prediction_model.py  Logistic Regression / Neural Network
-│   ├── recommender.py       SVD matrix factorization + cold start
-│   ├── reinforcement.py     Epsilon-greedy bandit
-│   └── evaluation.py        RMSE, Precision@K
-├── notebooks/               Phase-by-phase analysis and results
-├── outputs/                 Saved charts
-├── app/                     Streamlit demo (optional)
-└── README.md
+data/ MovieLens 100K dataset
+src/
+clustering.py K-Means user segmentation
+prediction_model.py Logistic Regression / Neural Network
+recommender.py SVD matrix factorization + cold start
+reinforcement.py Epsilon-greedy bandit
+evaluation.py RMSE, Precision@K
+notebooks/ Phase-by-phase analysis and results
+outputs/ Saved charts
+app/ Streamlit demo (optional)
+README.md
+
 ## Future Improvements
 
 - Neural collaborative filtering instead of linear matrix factorization
