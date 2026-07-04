@@ -74,7 +74,6 @@ Python, NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn, Streamlit
 
 
 
-```
 
 ai-adaptive-recommender/
 
@@ -99,8 +98,6 @@ ai-adaptive-recommender/
 ├── app/                     Streamlit demo (optional)
 
 └── README.md
-
-```
 
 
 
