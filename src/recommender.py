@@ -45,3 +45,24 @@ def recommend_for_new_user(preferred_item_ids: list, ratings: pd.DataFrame,
 
     result = items[items["item_id"].isin(top["item_id"])]
     return result
+def train_svd_model_centered(user_item_matrix: pd.DataFrame, n_components: int = 20):
+    mask = user_item_matrix != 0
+    user_means = user_item_matrix.replace(0, np.nan).mean(axis=1)
+    user_means = user_means.fillna(0)
+
+    centered_matrix = user_item_matrix.sub(user_means, axis=0)
+    centered_matrix = centered_matrix * mask  # keep zeros where data was actually missing
+
+    svd = TruncatedSVD(n_components=n_components, random_state=42)
+    user_factors = svd.fit_transform(centered_matrix)
+    item_factors = svd.components_
+
+    reconstructed = np.dot(user_factors, item_factors)
+    reconstructed_df = pd.DataFrame(
+        reconstructed,
+        index=user_item_matrix.index,
+        columns=user_item_matrix.columns
+    )
+    reconstructed_df = reconstructed_df.add(user_means, axis=0)
+
+    return reconstructed_df, svd, user_means
