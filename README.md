@@ -1,22 +1,22 @@
-# Adaptive Intelligent Recommendation & Decision System
+﻿# Adaptive Intelligent Recommendation & Decision System
 
 A recommendation engine that segments users by behavior, predicts preference likelihood, generates personalized recommendations via matrix factorization, and adapts over time using reinforcement learning.
 
 ## Problem Statement
 
-The MovieLens 100K dataset (943 users, 1682 items, 100,000 ratings) is 93.7% sparse — the vast majority of user-item pairs have no rating. This sparsity is why naive approaches like global averages fail, and why a multi-layered approach (segmentation, prediction, factorization, adaptation) is needed.
+The MovieLens 100K dataset (943 users, 1682 items, 100,000 ratings) is 93.7% sparse â€” the vast majority of user-item pairs have no rating. This sparsity is why naive approaches like global averages fail, and why a multi-layered approach (segmentation, prediction, factorization, adaptation) is needed.
 
 ## Approach
 
-1. **User Segmentation (Unsupervised Learning)** — K-Means clustering (k=5, selected via elbow method) grouped users into behavioral segments: critical/inconsistent raters, generous consistent fans, steady moderate raters, high-volume power users, and typical users.
+1. **User Segmentation (Unsupervised Learning)** â€” K-Means clustering (k=5, selected via elbow method) grouped users into behavioral segments: critical/inconsistent raters, generous consistent fans, steady moderate raters, high-volume power users, and typical users.
 
-2. **Preference Prediction (Supervised Learning)** — Logistic Regression and a Neural Network (32→16 hidden units) were both trained to predict whether a user would rate an item 4+. Both achieved ~71.8% accuracy, well above the ~55% naive majority-class baseline. Logistic Regression was selected for production due to comparable performance with greater interpretability.
+2. **Preference Prediction (Supervised Learning)** â€” Logistic Regression and a Neural Network (32â†’16 hidden units) were both trained to predict whether a user would rate an item 4+. Both achieved ~71.8% accuracy, well above the ~55% naive majority-class baseline. Logistic Regression was selected for production due to comparable performance with greater interpretability.
 
-3. **Recommendation Generation (Matrix Factorization)** — Truncated SVD (20 components) generates personalized Top-N recommendations. An initial implementation had a critical bug: filling unrated entries with 0 caused the model to learn toward zero across the board, producing an RMSE of 2.64 — worse than a naive mean predictor (1.12). Fixing this with per-user mean-centering before factorization (and adding the mean back after reconstruction) brought RMSE down to 0.99, a 12% improvement over baseline.
+3. **Recommendation Generation (Matrix Factorization)** â€” Truncated SVD (20 components) generates personalized Top-N recommendations. An initial implementation had a critical bug: filling unrated entries with 0 caused the model to learn toward zero across the board, producing an RMSE of 2.64 â€” worse than a naive mean predictor (1.12). Fixing this with per-user mean-centering before factorization (and adding the mean back after reconstruction) brought RMSE down to 0.99, a 12% improvement over baseline.
 
-4. **Cold Start Handling** — New users with no rating history receive popularity-weighted recommendations from users who share at least one known preference, filtered to items with 5+ ratings for reliability.
+4. **Cold Start Handling** â€” New users with no rating history receive popularity-weighted recommendations from users who share at least one known preference, filtered to items with 5+ ratings for reliability.
 
-5. **Adaptive Refinement (Reinforcement Learning)** — An epsilon-greedy multi-armed bandit (epsilon=0.1) demonstrates how the system could adapt recommendations from real click/ignore feedback rather than relying on a static model. In simulation, it correctly identified the best-performing item among 10 candidates and selected it in 82% of rounds after 1000 rounds of feedback.
+5. **Adaptive Refinement (Reinforcement Learning)** â€” An epsilon-greedy multi-armed bandit (epsilon=0.1) demonstrates how the system could adapt recommendations from real click/ignore feedback rather than relying on a static model. In simulation, it correctly identified the best-performing item among 10 candidates and selected it in 82% of rounds after 1000 rounds of feedback.
 
 ## Results
 
@@ -38,17 +38,17 @@ Python, NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn, Streamlit
 
 ```
 ai-adaptive-recommender/
-├── data/                     MovieLens 100K dataset
-├── src/
-│   ├── clustering.py         K-Means user segmentation
-│   ├── prediction_model.py   Logistic Regression / Neural Network
-│   ├── recommender.py        SVD matrix factorization + cold start
-│   ├── reinforcement.py      Epsilon-greedy bandit
-│   └── evaluation.py         RMSE, Precision@K
-├── notebooks/                Phase-by-phase analysis and results
-├── outputs/                  Saved charts
-├── app/                      Streamlit demo (optional)
-└── README.md
+â”œâ”€â”€ data/                     MovieLens 100K dataset
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ clustering.py         K-Means user segmentation
+â”‚   â”œâ”€â”€ prediction_model.py   Logistic Regression / Neural Network
+â”‚   â”œâ”€â”€ recommender.py        SVD matrix factorization + cold start
+â”‚   â”œâ”€â”€ reinforcement.py      Epsilon-greedy bandit
+â”‚   â””â”€â”€ evaluation.py         RMSE, Precision@K
+â”œâ”€â”€ notebooks/                Phase-by-phase analysis and results
+â”œâ”€â”€ outputs/                  Saved charts
+â”œâ”€â”€ app/                      Streamlit demo (optional)
+â””â”€â”€ README.md
 ```
 
 ## Future Improvements
@@ -57,3 +57,37 @@ ai-adaptive-recommender/
 - Contextual bandits using user features, not just item identity
 - Real click-stream feedback instead of simulated rewards
 - Hyperparameter tuning on the number of SVD components
+
+<!-- structure:start -->
+## Project structure
+
+**Stack:** Jupyter Notebook, Python
+
+```
+data/
+    u.data
+    u.item
+    u.user
+notebooks/
+    01_exploration.ipynb
+    02_prediction.ipynb
+    03_recommender.ipynb
+    04_reinforcement.ipynb
+    05_evaluation.ipynb
+outputs/
+    bandit_learning_curve.png
+    elbow_plot.png
+    rating_distribution.png
+src/
+    clustering.py
+    evaluation.py
+    prediction_model.py
+    recommender.py
+    reinforcement.py
+.gitignore
+main.py
+README.md
+requirements.txt
+```
+<!-- structure:end -->
+
