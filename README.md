@@ -38,17 +38,18 @@ Python, NumPy, Pandas, Scikit-learn, Matplotlib, Seaborn, Streamlit
 
 ```
 ai-adaptive-recommender/
-â”œâ”€â”€ data/                     MovieLens 100K dataset
-â”œâ”€â”€ src/
-â”‚   â”œâ”€â”€ clustering.py         K-Means user segmentation
-â”‚   â”œâ”€â”€ prediction_model.py   Logistic Regression / Neural Network
-â”‚   â”œâ”€â”€ recommender.py        SVD matrix factorization + cold start
-â”‚   â”œâ”€â”€ reinforcement.py      Epsilon-greedy bandit
-â”‚   â””â”€â”€ evaluation.py         RMSE, Precision@K
-â”œâ”€â”€ notebooks/                Phase-by-phase analysis and results
-â”œâ”€â”€ outputs/                  Saved charts
-â”œâ”€â”€ app/                      Streamlit demo (optional)
-â””â”€â”€ README.md
+├── data/                  # MovieLens 100K dataset
+├── src/
+│   ├── clustering.py      # K-Means user segmentation
+│   ├── prediction_model.py# Logistic Regression / Neural Network
+│   ├── recommender.py     # SVD matrix factorization + cold start
+│   ├── reinforcement.py   # Epsilon-greedy bandit
+│   └── evaluation.py      # RMSE, Precision@K
+├── notebooks/             # Phase-by-phase analysis and results
+├── outputs/               # Saved charts
+├── app/                   # Streamlit demo (optional)
+└── README.md
+
 ```
 
 ## Future Improvements
